@@ -55,21 +55,25 @@
                   <h2><label for="image">{{ 'lbl.Image'|trans|ucfirst }}</label></h2>
                 </div>
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-lg-3">
-                      <div data-fork-cms-role="image-preview-wrapper" data-id="image">
-                        <label for="image">
-                          <img src="{{ BACKEND_CORE_URL }}/Layout/Images/image-upload-placeholder.jpg" class="img-thumbnail" width="200" height="200" alt="{{ 'lbl.Image'|trans|ucfirst }}" data-fork-cms-role="image-preview" data-id="image" />
-                        </label>
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <div class="form-group">
-                        <label class="form-label" for="image">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
-                        {% form_field image %}
-                        {% form_field_error image %}
-                      </div>
-                    </div>
+{#                  <div class="row">#}
+{#                    <div class="col-lg-3">#}
+{#                      <div data-fork-cms-role="image-preview-wrapper" data-id="image">#}
+{#                        <label for="image">#}
+{#                          <img src="{{ BACKEND_CORE_URL }}/Layout/Images/image-upload-placeholder.jpg" class="img-thumbnail" width="200" height="200" alt="{{ 'lbl.Image'|trans|ucfirst }}" data-fork-cms-role="image-preview" data-id="image" />#}
+{#                        </label>#}
+{#                      </div>#}
+{#                    </div>#}
+{#                    <div class="col-lg-9">#}
+{#                      <div class="form-group">#}
+{#                        <label class="form-label" for="image">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>#}
+{#                        {% form_field image %}#}
+{#                        {% form_field_error image %}#}
+{#                      </div>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                </div>#}
+                  <div data-v-image-upload>
+                    <vue-image-upload :label="{{ 'lbl.Image'|trans|ucfirst }}" imageUrl="https://via.placeholder.com/150"></vue-image-upload>
                   </div>
                 </div>
               </div>

@@ -7,6 +7,10 @@ import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'
 import 'select2/dist/js/select2.full'
 // TODO WEBPACK remove jquery ui, now used for sortable and datepicker
 import 'jquery-ui-dist/jquery-ui'
+import Vue from 'vue'
+
+// vue component imports
+import VueImageUpload from './vue-components/VueImageUpload'
 
 // component imports
 import { Ajax } from './Components/Ajax'
@@ -113,5 +117,11 @@ export class Backend {
 $(window).on('load', () => {
   window.backend = new Backend()
   window.backend.initBackend()
-})
 
+  if ($('[data-v-image-upload]').length) {
+    window.backend.imageUploadVue = new Vue({
+      el: '[data-v-image-upload]',
+      components: {VueImageUpload}
+    })
+  }
+})
