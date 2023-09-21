@@ -1,6 +1,6 @@
 <template>
   <div class="media-selector">
-    <p class="form-label">{{ selectTrans }} <span v-if="limit">(maximum {{ limit }})</span>:</p>
+    <p class="form-label" v-if="label">{{ label }} <span v-if="limit">(maximum {{ limit }})</span>:</p>
     <div class="sortable-row">
       <Sortable
           :list="images"
@@ -121,7 +121,8 @@ export default {
     selection: {
       type: Array,
       default: []
-    }
+    },
+    label: String
   },
   components: { FileTreeItem, Sortable },
   data() {
@@ -131,7 +132,7 @@ export default {
       limit: 1,
       previousSelection: '',
       selectedFolder: {},
-      selectTrans: '',
+      locale: undefined,
       imageOptions: {
         folder1: {
           name: 'default',
@@ -375,8 +376,8 @@ export default {
     //     })
   },
   mounted () {
-    console.log(window.backend.locale.get('lbl', 'SelectedTheme', 'Extensions'))
-    this.selectTrans = window.backend.locale.msg( 'Saved')
+    console.log(window.backend.locale)
+    this.locale = window.backend.locale.get('lbl', 'Select')
     this.fileModal = new bootstrap.Modal(`#fileBrowserModal_${this.id}`, {})
     // this.isFile ? this.getFiles() : this.getImages
     if (this.selection.length) {
