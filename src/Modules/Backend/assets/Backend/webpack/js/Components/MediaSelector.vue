@@ -1,14 +1,24 @@
 <template>
   <div class="media-selector">
     <p class="form-label">{{ selectTrans }} <span v-if="limit">(maximum {{ limit }})</span>:</p>
-    <div class="row">
-      <div class="col-6 col-md-auto" v-if="selection" v-for="image in images">
-        <div class="media-selector--preview">
-          <a href="#" class="media-selector--remove-btn" @click.prevent="toggleSelection(image)" v-if="!min"><i class="fa fa-times"></i></a>
-          <img class="" alt="" :src="image.url" @click="openImageModal" draggable="false">
-        </div>
-        {{ image.id }}
-      </div>
+    <div class="sortable-row">
+      <Sortable
+          :list="images"
+          item-key="id"
+          :options="{ animation: 150 }"
+          @end="moveItemInArray"
+      >
+        <template #item="{element, index}" v-if="images.length > 0">
+          <div class="col-6 col-md-auto draggable">
+            <div class="media-selector--preview">
+              <a href="#" class="media-selector--remove-btn" @click.prevent="removeSelection(element)" v-if="!min"><i class="fa fa-times"></i></a>
+              <img class="" alt="" :src="element.url" @click="openImageModal" draggable="false">
+            </div>
+            {{ element.id }}
+            {{ index }}
+          </div>
+        </template>
+      </Sortable>
       <div class="col-6 col-md-auto" v-if="images.length === 0">
         <div class="media-selector--placeholder" @click="openImageModal"></div>
       </div>
@@ -74,7 +84,7 @@
                         {{ item.title }}
                       </div>
                       <div class="col-auto">
-                        <div class="media-selector--remove-btn position-static" @click="toggleSelection(item)"><i class="fa fa-times"></i></div>
+                        <div class="media-selector--remove-btn position-static" @click="removeSelection(item)"><i class="fa fa-times"></i></div>
                       </div>
                     </div>
                   </div>
@@ -95,6 +105,7 @@
 <script>
 import axios from 'axios'
 import FileTreeItem from './FileTreeItem.vue'
+import { Sortable } from "sortablejs-vue3";
 
 export default {
   props: {
@@ -112,7 +123,7 @@ export default {
       default: []
     }
   },
-  components: { FileTreeItem },
+  components: { FileTreeItem, Sortable },
   data() {
     return {
       images: [],
@@ -163,22 +174,30 @@ export default {
                 {
                   url: 'https://plus.unsplash.com/premium_photo-1677094766815-e0fe790e364a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
                   id: 'image5',
-                  title: 'Image 3',
+                  title: 'Image 5',
+                  created: '12/09/2023',
+                  used: 2995
                 },
                 {
                   url: 'https://plus.unsplash.com/premium_photo-1677094766815-e0fe790e364a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
                   id: 'image6',
                   title: 'Langere image title die heel lang is',
+                  created: '12/09/2023',
+                  used: 2995
                 },
                 {
                   url: 'https://plus.unsplash.com/premium_photo-1677094766815-e0fe790e364a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
                   id: 'image7',
-                  title: 'Image 3',
+                  title: 'Image 7',
+                  created: '12/09/2023',
+                  used: 2995
                 },
                 {
                   url: 'https://plus.unsplash.com/premium_photo-1677094766815-e0fe790e364a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
                   id: 'image8',
-                  title: 'Image 3',
+                  title: 'Image 8',
+                  created: '12/09/2023',
+                  used: 2995
                 },
               ]
             }
@@ -191,22 +210,30 @@ export default {
             {
               url: 'https://images.unsplash.com/photo-1501183007986-d0d080b147f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
               id: 'image9',
-              title: 'Image 3',
+              title: 'Image 9',
+              created: '12/09/2023',
+              used: 2995
             },
             {
               url: 'https://images.unsplash.com/photo-1501183007986-d0d080b147f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
               id: 'image10',
-              title: 'Image 3',
+              title: 'Image 10',
+              created: '12/09/2023',
+              used: 2995
             },
             {
               url: 'https://images.unsplash.com/photo-1501183007986-d0d080b147f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
               id: 'image11',
-              title: 'Image 3',
+              title: 'Image 11',
+              created: '12/09/2023',
+              used: 2995
             },
             {
               url: 'https://images.unsplash.com/photo-1501183007986-d0d080b147f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
               id: 'image12',
-              title: 'Image 3',
+              title: 'Image 12',
+              created: '12/09/2023',
+              used: 2995
             },
           ],
           children: {
@@ -217,22 +244,30 @@ export default {
                 {
                   url: 'https://images.unsplash.com/photo-1532767153582-b1a0e5145009?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
                   id: 'image13',
-                  title: 'Image 3',
+                  title: 'Image 13',
+                  created: '12/09/2023',
+                  used: 2995
                 },
                 {
                   url: 'https://images.unsplash.com/photo-1532767153582-b1a0e5145009?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
                   id: 'image14',
-                  title: 'Image 3',
+                  title: 'Image 14',
+                  created: '12/09/2023',
+                  used: 2995
                 },
                 {
                   url: 'https://images.unsplash.com/photo-1532767153582-b1a0e5145009?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
                   id: 'image15',
-                  title: 'Image 3',
+                  title: 'Image 15',
+                  created: '12/09/2023',
+                  used: 2995
                 },
                 {
                   url: 'https://images.unsplash.com/photo-1532767153582-b1a0e5145009?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
                   id: 'image16',
-                  title: 'Image 3',
+                  title: 'Image 16',
+                  created: '12/09/2023',
+                  used: 2995
                 },
               ],
               children: {
@@ -243,22 +278,30 @@ export default {
                     {
                       url: 'https://images.unsplash.com/photo-1525498128493-380d1990a112?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1335&q=80',
                       id: 'image17',
-                      title: 'Image 3',
+                      title: 'Image 17',
+                      created: '12/09/2023',
+                      used: 2995
                     },
                     {
                       url: 'https://images.unsplash.com/photo-1525498128493-380d1990a112?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1335&q=80',
                       id: 'image18',
-                      title: 'Image 3',
+                      title: 'Image 18',
+                      created: '12/09/2023',
+                      used: 2995
                     },
                     {
                       url: 'https://images.unsplash.com/photo-1525498128493-380d1990a112?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1335&q=80',
                       id: 'image19',
-                      title: 'Image 3',
+                      title: 'Image 19',
+                      created: '12/09/2023',
+                      used: 2995
                     },
                     {
                       url: 'https://images.unsplash.com/photo-1525498128493-380d1990a112?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1335&q=80',
                       id: 'image20',
-                      title: 'Image 3',
+                      title: 'Image 20',
+                      created: '12/09/2023',
+                      used: 2995
                     },
                   ]
                 }
@@ -274,8 +317,16 @@ export default {
       this.previousSelection = [...this.images]
       this.fileModal.show()
     },
+    removeSelection(img) {
+      let imageIndex = this.images.findIndex(image => image.id === img.id)
+      console.log('index: ', imageIndex)
+      console.log('image: ', img)
+      if (imageIndex >= 0) this.images.splice(imageIndex, 1)
+    },
     toggleSelection(img) {
       let imageIndex = this.images.findIndex(image => image.id === img.id)
+      console.log('index: ', imageIndex)
+      console.log('image: ', img)
       if (this.limit === 1 && imageIndex < 0) {
         this.images = [img]
         this.saveSelection()
@@ -283,13 +334,16 @@ export default {
       }
       if (imageIndex >= 0) this.images.splice(imageIndex, 1)
       else if (this.limit && this.images.length >= this.limit) return
-      else this.images.push(img)
+      else {
+        this.images.push(img)
+      }
     },
     cancelSelection() {
       this.images = this.previousSelection
     },
     saveSelection() {
       let ids = this.images.map(image => image.id)
+      // TODO: add order to items based on index
       console.log('ids: ', ids)
       // axios.post(url, ids)
       //     .then(response => {
@@ -301,7 +355,9 @@ export default {
       this.selectedFolder = id
       console.log(id)
     },
-    folderToShow() {
+    moveItemInArray(event) {
+      const item = this.images.splice(event.oldIndex, 1)[0]
+      this.images.splice(event.newIndex, 0, item)
     }
     // getImages() {
       // get images from media library
