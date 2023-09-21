@@ -63,14 +63,19 @@
             </div>
             <div class="image-selection mt-4 pt-4 border-top" v-show="images.length && multiple">
               <h2 class="fs-5">Selection:</h2>
-              <div class="row g-2">
+              <div class="row gy-2 gx-3">
                 <div class="col-md-6 col-lg-4" v-for="item in images">
-                  <div class="row mb-2">
-                    <div class="col-auto">
-                      <img :src="item.url" alt="">
-                    </div>
-                    <div class="col">
-                      {{ item.title }}
+                  <div class="border rounded p-2 mb-2">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <img :src="item.url" alt="">
+                      </div>
+                      <div class="col">
+                        {{ item.title }}
+                      </div>
+                      <div class="col-auto">
+                        <div class="media-selector--remove-btn position-static" @click="toggleSelection(item)"><i class="fa fa-times"></i></div>
+                      </div>
                     </div>
                   </div>
                 </div>
