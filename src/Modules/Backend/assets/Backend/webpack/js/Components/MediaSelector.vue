@@ -1,10 +1,10 @@
 <template>
   <div class="media-selector">
-    <p class="form-label">Please select an image <span v-if="limit">(maximum {{ limit }})</span>:</p>
+    <p class="form-label">{{ selectTrans }} <span v-if="limit">(maximum {{ limit }})</span>:</p>
     <div class="row">
       <div class="col-6 col-md-auto" v-if="selection" v-for="image in images">
         <div class="media-selector--preview">
-          <div class="media-selector--remove-btn" @click="toggleSelection(image)"><i class="fa fa-times"></i></div>
+          <a href="#" class="media-selector--remove-btn" @click.prevent="toggleSelection(image)" v-if="!min"><i class="fa fa-times"></i></a>
           <img class="" alt="" :src="image.url" @click="openImageModal" draggable="false">
         </div>
         {{ image.id }}
@@ -84,7 +84,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="cancelSelection">Cancel</button>
-            <button type="button" class="btn btn-primary" @click="saveSelection">Save selection</button>
+            <button type="button" class="btn btn-primary" @click="saveSelection" :disabled="min && this.images.length < min">Save selection</button>
           </div>
         </div>
       </div>
@@ -100,7 +100,10 @@ export default {
   props: {
     id: String,
     multiple: Boolean,
-    amount: {
+    max: {
+      type: Number
+    },
+    min: {
       type: Number
     },
     isFile: Boolean,
@@ -117,6 +120,7 @@ export default {
       limit: 1,
       previousSelection: '',
       selectedFolder: {},
+      selectTrans: '',
       imageOptions: {
         folder1: {
           name: 'default',
@@ -315,14 +319,15 @@ export default {
     //     })
   },
   mounted () {
-    console.log(window.backend.locale)
+    console.log(window.backend.locale.get('lbl', 'SelectedTheme', 'Extensions'))
+    this.selectTrans = window.backend.locale.msg( 'Saved')
     this.fileModal = new bootstrap.Modal(`#fileBrowserModal_${this.id}`, {})
     // this.isFile ? this.getFiles() : this.getImages
     if (this.selection.length) {
       this.images = this.selection
     }
-    if (this.amount) this.limit = this.amount
-    else if (this.multiple && !this.amount) this.limit = null
+    if (this.max) this.limit = this.max
+    else if (this.multiple && !this.max) this.limit = null
     this.selectedFolder = Object.entries(this.imageOptions)[0][1]
   }
 }

@@ -74,6 +74,13 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+
+    &:hover, &:focus {
+      color: $white;
+      background-color: $danger;
+      border-color: $danger;
+    }
   }
 
   &--used {
