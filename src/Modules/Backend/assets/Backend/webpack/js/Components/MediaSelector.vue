@@ -275,12 +275,12 @@ export default {
       this.fileModal.show()
     },
     toggleSelection(img) {
-      if (this.limit === 1) {
+      let imageIndex = this.images.findIndex(image => image.id === img.id)
+      if (this.limit === 1 && imageIndex < 0) {
         this.images = [img]
         this.saveSelection()
         return
       }
-      let imageIndex = this.images.findIndex(image => image.id === img.id)
       if (imageIndex >= 0) this.images.splice(imageIndex, 1)
       else if (this.limit && this.images.length >= this.limit) return
       else this.images.push(img)
