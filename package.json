@@ -47,6 +47,7 @@
     "select2-bootstrap-5-theme": "^1.2.0",
     "simple-ajax-uploader": "^2.6.7",
     "sortablejs": "^1.15.0",
+    "sortablejs-vue3": "^1.2.9",
     "standard": "^17.0.0",
     "terser-webpack-plugin": "^5.0.0",
     "typeahead.js": "^0.11.1",
