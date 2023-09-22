@@ -45,9 +45,9 @@
                   <div :class="['col-12 media-selector--library-item', {selected: images.includes(image)}, {disabled: limit && limit > 1 && images.length >= limit}]" v-for="image in selectedFolder.items" @click="toggleSelection(image)" :key="image.id">
                     <div class="row align-items-center">
                       <div class="col-auto">
-                        <a href="#" @click.prevent="" class="btn btn-primary">
-                          <template v-if="images.includes(image)">Deselecteer</template>
-                          <template v-else="images.includes(image)">Selecteer</template>
+                        <a href="#" @click.prevent="" class="btn btn-primary text-capitalize">
+                          <template v-if="images.includes(image)">{{ trans.deselect }}</template>
+                          <template v-else="images.includes(image)">{{ trans.select }}</template>
                         </a>
                       </div>
                       <div class="col-auto">
@@ -93,8 +93,8 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="cancelSelection">Cancel</button>
-            <button type="button" class="btn btn-primary" @click="saveSelection" :disabled="min && this.images.length < min">Save selection</button>
+            <button type="button" class="btn btn-secondary text-capitalize" data-bs-dismiss="modal" @click="cancelSelection">{{ trans.cancel }}</button>
+            <button type="button" class="btn btn-primary text-capitalize" @click="saveSelection" :disabled="min && this.images.length < min">{{ trans.save }}</button>
           </div>
         </div>
       </div>
@@ -132,7 +132,12 @@ export default {
       limit: 1,
       previousSelection: '',
       selectedFolder: {},
-      locale: undefined,
+      trans: {
+        select: 'select',
+        deselect: 'deselect',
+        cancel: 'cancel',
+        save: 'save'
+      },
       imageOptions: {
         folder1: {
           name: 'default',
@@ -377,7 +382,10 @@ export default {
   },
   mounted () {
     console.log(window.backend.locale)
-    this.locale = window.backend.locale.get('lbl', 'Select')
+    this.trans.select = window.backend.locale.get('lbl', 'Select')
+    this.trans.deselect = window.backend.locale.get('lbl', 'Deselect')
+    this.trans.cancel = window.backend.locale.get('lbl', 'Cancel')
+    this.trans.save = window.backend.locale.get('lbl', 'Save')
     this.fileModal = new bootstrap.Modal(`#fileBrowserModal_${this.id}`, {})
     // this.isFile ? this.getFiles() : this.getImages
     if (this.selection.length) {
