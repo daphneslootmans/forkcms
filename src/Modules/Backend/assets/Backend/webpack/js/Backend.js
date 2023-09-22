@@ -27,8 +27,6 @@ import { Config } from './Components/Config'
 import { PasswordGenerator } from './Components/PasswordGenerator'
 import { PasswordStrenghtMeter } from '../../../../../../Core/assets/js/Components/PasswordStrenghtMeter'
 
-// block editor imports
-import { BlockEditor } from './BlockEditor/BlockEditor'
 window.bootstrap = bootstrap
 
 export class Backend {
@@ -62,9 +60,6 @@ export class Backend {
       app.component('MediaSelector', MediaSelector)
       app.mount('#content')
     }
-
-    // init block editor
-    this.blockEditor = new BlockEditor()
 
     Backend.initPasswordGenerators()
     Backend.initPasswordStrenghtMeters()
